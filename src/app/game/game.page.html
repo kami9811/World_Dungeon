@@ -1,0 +1,33 @@
+<ion-header>
+
+</ion-header>
+
+<ion-content>
+  <div id="load_time">更新</div>
+  <div id="remaining_time">残り時間: {{remaining_hour}}:{{remaining_min}}:{{remaining_sec}}</div>
+  <table border="1" class="map">
+    <tr *ngFor="let r of mapNum">
+      <td *ngFor="let d of mapNum">
+        <div [class]="mapCla[(r*16)+d]" [id]="'id'+r+d">{{beaNum[(r*16)+d]}}</div>
+      </td>
+    </tr>
+  </table>
+
+  <div id="treasure">トレジャーボタン</div>
+  <!-- 補間使って切り替えられるようにする -->
+  <div id="hint">ヒント</div>
+  <div id="treasure-description">トレジャーボタンを{{treasure_times}}回押すと宝の信号を受信！</div>
+
+  <div id="bottom-title">{{bottom_title}}</div>
+  <div id="bottom-frame">
+    <div id="bingo" *ngIf="bottom_bingo">ここにビンゴ</div>
+    <div id="photo" *ngIf="bottom_photo">ここに写真</div>
+  </div>
+  <div id="bingo-description" *ngIf="bingo_description">
+    <div id="bingo-open" *ngFor="let b of bingo_num">No.{{bingo[b]}}</div>
+  </div>
+
+  <div id="finish" (click)="navigateToScore()">冒険を終了する</div>
+
+
+</ion-content>

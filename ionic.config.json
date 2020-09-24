@@ -1,5 +1,7 @@
 {
   "name": "World Dungeon",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }

@@ -1,0 +1,44 @@
+<ion-header >
+  <ion-toolbar class="head">
+    <ion-img class="logo" src="../../assets/logo_tr.png" routerLink="/" routerLinkActive="current"></ion-img>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>マップ登録ページ</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <table border="1" class="map">
+    <tr *ngFor="let r of mapNum">
+      <td *ngFor="let d of mapNum">
+        <div [class]="mapCla[(r*16)+d]" [id]="'id:'+r+':'+d" (click)="onClick($event)">{{beaNum[(r*16)+d]}}</div>
+      </td>
+    </tr>
+  </table>
+
+  <form class="ion-padding" id="plot-nature">
+    <button type="submit" id="load" (click)="onLoad()">道</button>
+    <button type="submit" id="forrest" (click)="onForrest()">森</button>
+    <button type="submit" id="water" (click)="onWater()">水</button>
+    <button type="submit" id="eraser" (click)="onDel()">消しゴム</button>
+  </form>
+
+  <form class="ion-padding" id="plot-beacon">
+    <button type="submit" id="beacon:1" (click)="onBeacon($event)">ビーコン1</button>
+    <button type="submit" id="beacon:2" (click)="onBeacon($event)">ビーコン2</button>
+    <button type="submit" id="beacon:3" (click)="onBeacon($event)">ビーコン3</button>
+  </form>
+
+  <form class="ion-padding" id="photo">
+    <button id="photo1" (click)="navigateToPhoto($event)">写真1</button>
+    <button id="photo2" (click)="navigateToPhoto($event)">写真2</button>
+    <button id="photo3" (click)="navigateToPhoto($event)">写真3</button>
+  </form>
+
+  <form class="ion-padding">
+    <button id="map-regist-button" (click)="registMap()">マップ登録</button>
+    <button id="qr" (click)="navigateToQr()">QRコード生成</button>
+  </form>
+
+</ion-content>

@@ -1,0 +1,18 @@
+<ion-header >
+
+</ion-header>
+
+<ion-content>
+  <ion-img class="logo_start" src="../../assets/logo_tr.png"></ion-img>
+  <form class="ion-padding" (submit)="navigate()">
+    <button type="submit" id="game">ゲームスタート</button>
+  </form>
+  <div id="rank-table">ランキング表</div>
+  <div id="ranking">
+    <div id="first">[1位] 名前: {{firstName}} スコア: {{firstScore}}</div><br>
+    <div id="second">[2位]名前: {{secondName}} スコア: {{secondScore}}</div><br>
+    <div id="third">[3位]名前: {{thirdName}} スコア: {{thirdScore}}</div><br>
+    <div id="forth">[4位]名前: {{forthName}} スコア: {{forthScore}}</div><br>
+    <div id="fifth">[5位]名前: {{fifthName}} スコア: {{fifthScore}}</div><br>
+  </div>
+</ion-content>

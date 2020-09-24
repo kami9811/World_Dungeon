@@ -1,0 +1,23 @@
+<ion-header >
+
+</ion-header>
+
+<ion-content>
+  <div id="voucher-title">
+    獲得クーポン
+  </div>
+  <div id="voucher-table">
+    <div id="" *ngFor="let v of voucher_contents">
+      {{v}}
+    </div>
+  </div>
+
+  <!-- ここにキャラの画像を載せる. 画像はassetの中に -->
+  <!-- <ion-img src="../../assets/dungeon-man.jpg"></ion-img> -->
+
+  <form id="to-home">
+    <button type="submit" id="to-home-button" routerLink="/" routerLincActive="current">
+      ホームに戻る
+    </button>
+  </form>
+</ion-content>
