@@ -41,7 +41,7 @@
   border-radius : 5%;          /* 角丸       */
   font-size     : 13pt;        /* 文字サイズ */
   text-align    : center;      /* 文字位置   */
-  padding       : 8px 35px;   /* 余白       */
+  padding       : 8px 22px;   /* 余白       */
   background    : #cae4db;     /* 背景色     */
   color         : #000000;     /* 文字色     */
   line-height   : 1em;         /* 1行の高さ  */
@@ -53,7 +53,7 @@
   border-radius : 5%;          /* 角丸       */
   font-size     : 13pt;        /* 文字サイズ */
   text-align    : center;      /* 文字位置   */
-  padding       : 8px 35px;   /* 余白       */
+  padding       : 8px 22px;   /* 余白       */
   background    : #cae4db;     /* 背景色     */
   color         : #000000;     /* 文字色     */
   line-height   : 1em;         /* 1行の高さ  */
@@ -75,6 +75,14 @@
   margin : auto;
   border : 2px solid #000000;
 }
+#bottom-frame{
+  // border-radius : 5%;
+  text-align : center;
+  width : 90%;
+  height: 40%;
+  margin : auto;
+  border : 2px solid #000000;
+}
 #finish{
   border-radius: 5%;
   width : 90%;
@@ -83,4 +91,11 @@
   margin : auto;
   border : 2px solid #7a9d96;
   background : #cae4db;
+}
+
+// 画像
+.hint-image{
+  margin: auto;
+  width: 65%;
+  height: 65%;
 }

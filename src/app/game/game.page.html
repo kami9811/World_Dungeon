@@ -27,25 +27,24 @@
   <div class="treasure_hint">
   <div id="treasure" (click)="onBLE()">トレジャーボタン</div>
   <!-- 補間使って切り替えられるようにする -->
-  <div id="hint">ヒント</div>
+  <div id="hint" (click)="onHint()">{{hint_button}}</div>
   </div>
-  <div id="treasure-description">トレジャーボタンを連打すると宝の信号を受信！</div>
+  <div id="treasure-description">{{treasure_description}}</div>
   <div></div>
 
-  <div id="bottom-title"></div>
+  <div id="bottom-title">{{bottom_title}}</div>
   <div id="bottom-frame">
     <div id="bingo" *ngIf="bottom_bingo"></div>
-    <div id="photo" *ngIf="bottom_photo">ここに写真</div>
+    <div id="photo" *ngIf="bottom_photo">
+      <img class="hint-image" id="hint1" [src]="image1" *ngIf="image1Flag">
+      <img class="hint-image" id="hint2" [src]="image2" *ngIf="image2Flag">
+      <img class="hint-image" id="hint3" [src]="image3" *ngIf="image3Flag">
+    </div>
   </div>
   <!-- <div id="bingo-description" *ngIf="bingo_description">
     <div id="bingo-open" *ngFor="let b of bingo_num">No.{{bingo[b]}}</div>
   </div> -->
 
   <div id="finish" (click)="navigateToScore()">冒険を終了する</div>
-  <div>
-    {{bleContents1}} {{bleContents2}} {{bleContents3}}
-  </div>
-  <img [src]="image1" *ngIf="image1Flag">
-  <img [src]="image2" *ngIf="image2Flag">
-  <img [src]="image3" *ngIf="image3Flag">
+
 </ion-content>

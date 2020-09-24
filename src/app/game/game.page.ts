@@ -22,6 +22,8 @@ export class GamePage implements OnInit {
   remaining_sec: any = 0;
 
   treasure_times: Number = 0;
+  treasure_description: string = "トレジャーボタンタップで宝の信号を受信！";
+  hint_button: string = "探す宝をタップ！";
 
   bottom_title: string = "ビンゴ";
   bottom_bingo: Boolean = true;
@@ -45,12 +47,6 @@ export class GamePage implements OnInit {
   posObj: any = {};  // 登録時のオブジェクト
   getObj: any = {};  // 更新時のオブジェクト
 
-  // BLE
-  bleContents1: string = "";
-  bleContents2: string = "";
-  bleContents3: string = "";
-  bleContents4: string = "";
-
   // 画像格納
   image1: string = "";
   image1Flag: Boolean = false;
@@ -66,6 +62,7 @@ export class GamePage implements OnInit {
   beaconId1: any = 0;
   beaconId2: any = 0;
   beaconId: any = 0;
+  beaconAlready: Boolean[] = [true, true, true]
 
   constructor(
     public gs: GlobalService,
@@ -162,6 +159,9 @@ export class GamePage implements OnInit {
         this.getObj = res;
         console.log(this.getObj);
         this.remaining_min = this.set_min - (res['min'] - this.first_min) - 1;
+        if(res['sec'] - this.first_sec <= 0){
+          this.remaining_min = this.remaining_min + 1;
+        }
         if(this.remaining_min < 0){
           this.remaining_min = 60 + this.remaining_min;
         }
@@ -176,56 +176,56 @@ export class GamePage implements OnInit {
     );
   }
 
+  // ビーコンを検知するときの処理
   onBLE = () => {
     this.getTime();
+    console.log(this.beaconAlready);
     this.ble.scan([], 1).subscribe(
       device => {
         // 1号機
-        if(device['id'] == "180A0B3E-FC28-C7F3-EFC5-60A4E95125A8"){
-          this.bleContents1 = "信号の強度: ";
-          this.bleContents2 =  device['rssi'];
-          // this.bleContents = device.rssi;
+        if(device['id'] == "180A0B3E-FC28-C7F3-EFC5-60A4E95125A8" && this.beaconAlready[0]){
           if(Number(device['rssi']) > -40){
-            this.bleContents3 = "1番の宝発見！";
-
-            this.bingoScore = this.bingoScore + 100;
+            this.treasure_description = "お宝ゲット！光った枠から" + 3 + "個あけられるよ！";
+            this.beaconAlready[0] = false;
           }
-          else{
-            this.bleContents3 = "";
+          else if(Number(device['rssi']) > -50){
+            this.treasure_description = "宝の至近距離でトレジャーボタンをタップ！";
+          }
+          else if(Number(device['rssi']) > -80){
+            this.treasure_description = "お宝の匂いがするぞ！";
           }
         }
         // 2号機
-        if(device['id'] == "C5CD47FD-3C74-35BB-551B-C8995C88BC0A"){
-          this.bleContents1 = "信号の強度: ";
-          this.bleContents2 =  device['rssi'];
-          // this.bleContents = device.rssi;
+        else if(device['id'] == "C5CD47FD-3C74-35BB-551B-C8995C88BC0A" && this.beaconAlready[1]){
           if(Number(device['rssi']) > -40){
-            this.bleContents3 = "2番の宝発見！スコアが増えました";
-
-            this.bingoScore = this.bingoScore + 100;
+            this.treasure_description = "お宝ゲット！光った枠から" + 3 + "個あけられるよ！";
+            this.beaconAlready[1] = false;
           }
-          else{
-            this.bleContents3 = "";
+          else if(Number(device['rssi']) > -50){
+            this.treasure_description = "宝の至近距離でトレジャーボタンをタップ！";
+          }
+          else if(Number(device['rssi']) > -80){
+            this.treasure_description = "お宝の匂いがするぞ！";
           }
         }
         // 3号機
-        if(device['id'] == "C5CD47FD-3C74-35BB-551B-C8995C88BC0A"){
-          this.bleContents1 = "信号の強度: ";
-          this.bleContents2 =  device['rssi'];
-          // this.bleContents = device.rssi;
+        else if(device['id'] == "C5CD47FD-3C74-35BB-551B-C8995C88BC0A" && this.beaconAlready[2]){
           if(Number(device['rssi']) > -40){
-            this.bleContents3 = "3番の宝発見！スコアが増えました";
-
-            this.bingoScore = this.bingoScore + 100;
+            this.treasure_description = "お宝ゲット！光った枠から" + 3 + "個あけられるよ！";
+            this.beaconAlready[2] = false;
           }
-          else{
-            this.bleContents3 = "";
+          else if(Number(device['rssi']) > -50){
+            this.treasure_description = "宝の至近距離でトレジャーボタンをタップ！";
+          }
+          else if(Number(device['rssi']) > -80){
+            this.treasure_description = "お宝の匂いがするぞ！";
           }
         }
       }
     );
   }
 
+  // ビーコンエリアをタップした時の処理
   onBeacon = (e: any) => {
     this.beaconId1 = Number(e.target.id.split(":")[1]);
     this.beaconId2 = Number(e.target.id.split(":")[2]);
@@ -235,21 +235,25 @@ export class GamePage implements OnInit {
       this.beaconFlag1 = true;
       this.beaconFlag2 = false;
       this.beaconFlag3 = false;
+      this.hint_button = "ヒントを表示する";
     }
     else if(this.mapAtt[this.beaconId] == 2){
       this.beaconFlag1 = false;
       this.beaconFlag2 = true;
       this.beaconFlag3 = false;
+      this.hint_button = "ヒントを表示する";
     }
     else if(this.mapAtt[this.beaconId] == 3){
       this.beaconFlag1 = false;
       this.beaconFlag2 = false;
       this.beaconFlag3 = true;
+      this.hint_button = "ヒントを表示する";
     }
     else{
       this.beaconFlag1 = false;
       this.beaconFlag2 = false;
       this.beaconFlag3 = false;
+      this.hint_button = "探す宝をタップ！"
     }
     // console.log(this.beaconFlag1);
     // console.log(this.beaconFlag2);
@@ -258,4 +262,42 @@ export class GamePage implements OnInit {
     // console.log(this.beaconId);
   }
 
+  // ヒント写真の開示
+  onHint = () => {
+    if(this.image1Flag == false && this.image2Flag == false && this.image3Flag == false){
+      if(this.beaconFlag1 == true){
+        this.image1Flag = true;
+        this.bottom_bingo = false;
+        this.bottom_photo = true;
+        this.bottom_title = "ヒント";
+        this.hint_button = "ヒントを非表示に";
+      }
+      else if(this.beaconFlag2 == true){
+        this.image2Flag = true;
+        this.bottom_bingo = false;
+        this.bottom_photo = true;
+        this.bottom_title = "ヒント";
+        this.hint_button = "ヒントを非表示に";
+      }
+      else if(this.beaconFlag3 == true){
+        this.image3Flag = true;
+        this.bottom_bingo = false;
+        this.bottom_photo = true;
+        this.bottom_title = "ヒント";
+        this.hint_button = "ヒントを非表示に";
+      }
+    }
+    else{
+      this.image1Flag = false;
+      this.image2Flag = false;
+      this.image3Flag = false;
+      this.bottom_bingo = true;
+      this.bottom_photo = false;
+      this.bottom_title = "ビンゴ";
+      this.hint_button = "探す宝をタップ！";
+    }
+    console.log(this.image1Flag);
+    console.log(this.image2Flag);
+    console.log(this.image3Flag);
+  }
 }
