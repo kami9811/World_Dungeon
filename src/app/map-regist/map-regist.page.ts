@@ -28,6 +28,8 @@ export class MapRegistPage implements OnInit {
   posObj: any = {};  // 登録時のオブジェクト
   getObj: any = {};  // 更新時のオブジェクト
 
+  user_id: string = '';
+
   constructor(
     public gs: GlobalService,
     private router: Router,
@@ -36,10 +38,13 @@ export class MapRegistPage implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(
-      // params => this.posObj['id'] = params['id']
+      params => {
+        this.user_id = params['id'];
+      }
     );
-    console.log(this.posObj['id']);
-    this.posObj['id'] = 'myhome';
+    console.log(this.user_id);
+    this.posObj['id'] = this.user_id;
+    // this.posObj['id'] = 'myhome';
 
     const body = this.posObj;
     console.log(body);
@@ -268,7 +273,7 @@ export class MapRegistPage implements OnInit {
     this.router.navigate(['/qr']);
   }
   navigateToPhoto = (e: any) => {
-    this.router.navigate(['/photo', e.target.id]);
+    this.router.navigate(['/photo', e.target.id, this.user_id]);
   }
 
 }

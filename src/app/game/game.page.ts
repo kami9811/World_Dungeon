@@ -51,6 +51,21 @@ export class GamePage implements OnInit {
   bleContents3: string = "";
   bleContents4: string = "";
 
+  // 画像格納
+  image1: string = "";
+  image1Flag: Boolean = false;
+  image2: string = "";
+  image2Flag: Boolean = false;
+  image3: string = "";
+  image3Flag: Boolean = false;
+
+  // ビーコンフラグ
+  beaconFlag1: Boolean = false;
+  beaconFlag2: Boolean = false;
+  beaconFlag3: Boolean = false;
+  beaconId1: any = 0;
+  beaconId2: any = 0;
+  beaconId: any = 0;
 
   constructor(
     public gs: GlobalService,
@@ -64,11 +79,13 @@ export class GamePage implements OnInit {
       params => this.id = params['id']
     );
     console.log(this.id);
-    // this.posObj['id'] = this.id;
-    this.posObj['id'] = 'myhome';
+    this.posObj['id'] = this.id;
+    // this.posObj['id'] = 'myhome';
 
     const body = this.posObj;
     console.log(body);
+
+    // マップ情報の取得
     this.gs.http('https://kn46itblog.com/hackathon/SumHackV220200916/php_apis/getMap.php', body).subscribe(
       res => {
         console.log('success: ' + JSON.stringify(res));
@@ -108,6 +125,7 @@ export class GamePage implements OnInit {
         console.log('error: ' + JSON.stringify(error));
       }
     );
+
     this.gs.http('https://kn46itblog.com/hackathon/Hack2-20200923/php_apis/getTime.php', body).subscribe(
       res => {
         console.log('success: ' + JSON.stringify(res));
@@ -121,6 +139,15 @@ export class GamePage implements OnInit {
         console.log('error: ' + JSON.stringify(error));
       }
     );
+
+    this.gs.http('https://kn46itblog.com/hackathon/Hack2-20200923/php_apis/getImg.php', body).subscribe(
+      res => {
+        console.log(res);
+        this.image1 = res['1'];
+        this.image2 = res['2'];
+        this.image3 = res['3'];
+      }
+    )
   }
 
   navigateToScore = () => {
@@ -197,6 +224,38 @@ export class GamePage implements OnInit {
         }
       }
     );
+  }
+
+  onBeacon = (e: any) => {
+    this.beaconId1 = Number(e.target.id.split(":")[1]);
+    this.beaconId2 = Number(e.target.id.split(":")[2]);
+    this.beaconId = 16 * this.beaconId1 + this.beaconId2;
+
+    if(this.mapAtt[this.beaconId] == 1){
+      this.beaconFlag1 = true;
+      this.beaconFlag2 = false;
+      this.beaconFlag3 = false;
+    }
+    else if(this.mapAtt[this.beaconId] == 2){
+      this.beaconFlag1 = false;
+      this.beaconFlag2 = true;
+      this.beaconFlag3 = false;
+    }
+    else if(this.mapAtt[this.beaconId] == 3){
+      this.beaconFlag1 = false;
+      this.beaconFlag2 = false;
+      this.beaconFlag3 = true;
+    }
+    else{
+      this.beaconFlag1 = false;
+      this.beaconFlag2 = false;
+      this.beaconFlag3 = false;
+    }
+    // console.log(this.beaconFlag1);
+    // console.log(this.beaconFlag2);
+    // console.log(this.beaconFlag3);
+    // console.log(e.target.id);
+    // console.log(this.beaconId);
   }
 
 }

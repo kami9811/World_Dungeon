@@ -20,16 +20,16 @@
   <table border="1" class="map">
     <tr *ngFor="let r of mapNum">
       <td *ngFor="let d of mapNum">
-        <div [class]="mapCla[(r*16)+d]" [id]="'id'+r+d">{{beaNum[(r*16)+d]}}</div>
+        <div [class]="mapCla[(r*16)+d]" [id]="'id:'+r+':'+d" (click)="onBeacon($event)">{{beaNum[(r*16)+d]}}</div>
       </td>
     </tr>
   </table>
   <div class="treasure_hint">
-  <div id="treasure">トレジャーボタン</div>
+  <div id="treasure" (click)="onBLE()">トレジャーボタン</div>
   <!-- 補間使って切り替えられるようにする -->
   <div id="hint">ヒント</div>
   </div>
-  <div id="treasure-description" (click)="onBLE()">トレジャーボタンを連打すると宝の信号を受信！</div>
+  <div id="treasure-description">トレジャーボタンを連打すると宝の信号を受信！</div>
   <div></div>
 
   <div id="bottom-title"></div>
@@ -45,4 +45,7 @@
   <div>
     {{bleContents1}} {{bleContents2}} {{bleContents3}}
   </div>
+  <img [src]="image1" *ngIf="image1Flag">
+  <img [src]="image2" *ngIf="image2Flag">
+  <img [src]="image3" *ngIf="image3Flag">
 </ion-content>
