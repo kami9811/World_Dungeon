@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { GlobalService } from '../global.service';
-import { ActionSheetController, AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -18,8 +17,6 @@ export class LoginPage implements OnInit {
   constructor(
     private router: Router,
     public gs: GlobalService,
-    public actionSheetController: ActionSheetController,
-    public alertController: AlertController,
   ) { }
 
   ngOnInit() {
@@ -37,7 +34,7 @@ export class LoginPage implements OnInit {
         this.resObj = res;
         console.log(this.resObj);
         if(this.resObj['status'] == 200){
-          this.router.navigate(['/map-regist']);
+          this.router.navigate(['/map-regist', this.id]);
         }
       },
       error => {

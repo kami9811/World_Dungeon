@@ -10,6 +10,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 export class PhotoPage implements OnInit {
   photo_num: string = '';
   currentImage: any;
+  photo_description: string = 'ヒントの撮影には下のボタンを押してください';
 
   constructor(
     private route: ActivatedRoute,

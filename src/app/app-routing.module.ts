@@ -16,7 +16,7 @@ const routes: Routes = [
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   },
   {
-    path: 'start',
+    path: 'start/:id',
     loadChildren: () => import('./start/start.module').then( m => m.StartPageModule)
   },
   {
@@ -24,7 +24,7 @@ const routes: Routes = [
     loadChildren: () => import('./voucher/voucher.module').then( m => m.VoucherPageModule)
   },
   {
-    path: 'map-regist',
+    path: 'map-regist/:id',
     loadChildren: () => import('./map-regist/map-regist.module').then( m => m.MapRegistPageModule)
   },
   {

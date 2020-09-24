@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { GlobalService } from '../global.service';
 
 @Component({
@@ -30,11 +30,16 @@ export class MapRegistPage implements OnInit {
 
   constructor(
     public gs: GlobalService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
-    this.posObj['id'] = 'myhome';
+    this.route.params.subscribe(
+      params => this.posObj['id'] = params['id']
+    );
+    console.log(this.posObj['id']);
+    // this.posObj['id'] = 'myhome';
 
     const body = this.posObj;
     console.log(body);
@@ -46,8 +51,9 @@ export class MapRegistPage implements OnInit {
         for(let i = 0; i < 256; i++){
           this.mapAtt[i] = this.getObj['map_list'][i];
           this.beaNum[i] = ' ';
-          if(this.mapAtt[i] == 0){
+          if(this.mapAtt[i] == 0 || this.mapAtt[i] == undefined){
             this.mapCla[i] = 'white';
+            this.mapAtt[i] = 0;
           }
           else if(this.mapAtt[i] == -1){
             this.mapCla[i] = 'load';
@@ -243,7 +249,7 @@ export class MapRegistPage implements OnInit {
       let n = String(i);
       this.posObj[n] = this.mapAtt[i];
     }
-    this.posObj['id'] = 'myhome';
+    // this.posObj['id'] = 'myhome';
 
     // POST
     const body = this.posObj;

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-start',
@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./start.page.scss'],
 })
 export class StartPage implements OnInit {
+  id: string = '';
+
   firstName: string = "";
   firstScore: Number = 0;
   secondName: string = "";
@@ -18,9 +20,16 @@ export class StartPage implements OnInit {
   fifthName: string = "";
   fifthScore: Number = 0;
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+  ) { }
 
   ngOnInit() {
+    this.route.params.subscribe(
+      params => this.id = params['id']
+    );
+    console.log(this.id);
   }
 
   navigate = () => {
