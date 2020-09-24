@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router'
+import { Router } from '@angular/router';
+import { GlobalService } from '../global.service';
+import { ActionSheetController, AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -10,12 +12,38 @@ export class LoginPage implements OnInit {
   id: string = "";
   password: string = "";
 
-  constructor(private router: Router) { }
+  posObj: any = {};  // 登録時のオブジェクト
+  resObj: any = {};  // APIから返された値
+
+  constructor(
+    private router: Router,
+    public gs: GlobalService,
+    public actionSheetController: ActionSheetController,
+    public alertController: AlertController,
+  ) { }
 
   ngOnInit() {
+
   }
 
   navigate = () => {
-    this.router.navigate(['/map-regist']);
+    this.posObj['id'] = this.id;
+    this.posObj['password'] = this.password;
+    const body = this.posObj;
+
+    this.gs.http('https://kn46itblog.com/hackathon/Hack2-20200923/php_apis/login.php', body).subscribe(
+      res => {
+        console.log('success: ' + JSON.stringify(res));
+        this.resObj = res;
+        console.log(this.resObj);
+        if(this.resObj['status'] == 200){
+          this.router.navigate(['/map-regist']);
+        }
+      },
+      error => {
+        console.log('error: ' + JSON.stringify(error));
+      }
+    );
   }
+
 }
