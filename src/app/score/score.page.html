@@ -20,7 +20,7 @@
 
   <form id="regist-form" (submit)="regist()">
     <label for="name">名前: </label>
-    <input type="text" id="name" name="name" />
+    <input type="text" id="name" [(ngModel)]="name" name="name" />
     <button type="submit" id="regist">登録</button>
   </form>
   <form *ngIf="getVoucher" id="to-voucher" (submit)="navigateToVoucher()">

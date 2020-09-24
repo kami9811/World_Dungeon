@@ -3,8 +3,8 @@
 </ion-header>
 
 <ion-content>
-  <div id="load_time">更新</div>
-  <div id="remaining_time">残り時間: {{remaining_hour}}:{{remaining_min}}:{{remaining_sec}}</div>
+  <div id="load_time" (click)="getTime()">更新</div>
+  <div id="remaining_time">残り時間: {{remaining_hour}}時間 {{remaining_min}}分 {{remaining_sec}}秒</div>
   <table border="1" class="map">
     <tr *ngFor="let r of mapNum">
       <td *ngFor="let d of mapNum">

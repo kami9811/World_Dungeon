@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { GlobalService } from '../global.service';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-score',
@@ -10,17 +11,48 @@ export class ScorePage implements OnInit {
   score: Number;
   rank: string = "";
   getVoucher: Boolean = true;
+  name: string = '';
 
-  constructor(private router: Router) { }
+  id: string = '';
+
+  posObj: any = {};
+  getObj: any = {};
+
+  constructor(
+    public gs: GlobalService,
+    private router: Router,
+    private route: ActivatedRoute,
+  ) { }
 
   ngOnInit() {
+    this.route.params.subscribe(
+      params => {
+        this.id = params['id'];
+        this.score = params['bingoScore'];
+      }
+    )
+    console.log(this.id);
+    console.log(this.score);
+  }
+
+  navigateToVoucher = () => {
+    this.router.navigate(['/voucher']);
   }
 
   regist = () => {
-
-  }
-  navigateToVoucher = () => {
-    this.router.navigate(['/voucher']);
+    this.posObj['id'] = this.id;
+    this.posObj['score'] = this.score;
+    this.posObj['name'] = this.name;
+    const body = this.posObj;
+    this.gs.http('https://kn46itblog.com/hackathon/Hack2-20200923/php_apis/registScore.php', body).subscribe(
+      res => {
+        console.log(res['status']);
+        this.navigateToVoucher();
+      },
+      error => {
+        console.log('error: ' + JSON.stringify(error));
+      }
+    );
   }
 
 }

@@ -36,11 +36,11 @@ const routes: Routes = [
     loadChildren: () => import('./photo/photo.module').then( m => m.PhotoPageModule)
   },
   {
-    path: 'game',
+    path: 'game/:id',
     loadChildren: () => import('./game/game.module').then( m => m.GamePageModule)
   },
   {
-    path: 'score',
+    path: 'score/:id/:bingoScore',
     loadChildren: () => import('./score/score.module').then( m => m.ScorePageModule)
   },
 ];
