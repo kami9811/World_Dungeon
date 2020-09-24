@@ -8,6 +8,7 @@
   </ion-toolbar>
 </ion-header>
 
+
 <ion-content>
   <table border="1" class="map">
     <tr *ngFor="let r of mapNum">
@@ -17,6 +18,7 @@
     </tr>
   </table>
 
+  <div class="button_wrapper">
   <form class="ion-padding" id="plot-nature">
     <button type="submit" id="load" (click)="onLoad()">道</button>
     <button type="submit" id="forrest" (click)="onForrest()">森</button>
@@ -25,9 +27,9 @@
   </form>
 
   <form class="ion-padding" id="plot-beacon">
-    <button type="submit" id="beacon:1" (click)="onBeacon($event)">ビーコン1</button>
-    <button type="submit" id="beacon:2" (click)="onBeacon($event)">ビーコン2</button>
-    <button type="submit" id="beacon:3" (click)="onBeacon($event)">ビーコン3</button>
+    <button type="submit" id="beacon1" (click)="onBeacon($event)">ビーコン1</button>
+    <button type="submit" id="beacon2" (click)="onBeacon($event)">ビーコン2</button>
+    <button type="submit" id="beacon3" (click)="onBeacon($event)">ビーコン3</button>
   </form>
 
   <form class="ion-padding" id="photo">
@@ -40,5 +42,5 @@
     <button id="map-regist-button" (click)="registMap()">マップ登録</button>
     <button id="qr" (click)="navigateToQr()">QRコード生成</button>
   </form>
-
+  </div>
 </ion-content>

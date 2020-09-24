@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GlobalService } from '../global.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { BLE } from '@ionic-native/ble/ngx';
 
 @Component({
   selector: 'app-game',
@@ -34,7 +35,7 @@ export class GamePage implements OnInit {
   bingo3: Number[] = [7, 8, 9];
   // bingo_num: Number [];
   bingo_num: Number[] = [...new Array(3).keys()];  // 開けられる数, 仮置き
-  bingoScore: Number = 0;  // ビンゴの結果
+  bingoScore: any = 0;  // ビンゴの結果
 
   // 描画情報
   mapNum: Number[] = [...new Array(16).keys()];  // マップサイズ
@@ -44,10 +45,18 @@ export class GamePage implements OnInit {
   posObj: any = {};  // 登録時のオブジェクト
   getObj: any = {};  // 更新時のオブジェクト
 
+  // BLE
+  bleContents1: string = "";
+  bleContents2: string = "";
+  bleContents3: string = "";
+  bleContents4: string = "";
+
+
   constructor(
     public gs: GlobalService,
     private router: Router,
     private route: ActivatedRoute,
+    private ble: BLE,
   ) { }
 
   ngOnInit() {
@@ -55,8 +64,8 @@ export class GamePage implements OnInit {
       params => this.id = params['id']
     );
     console.log(this.id);
-    this.posObj['id'] = this.id;
-    // this.posObj['id'] = 'myhome';
+    // this.posObj['id'] = this.id;
+    this.posObj['id'] = 'myhome';
 
     const body = this.posObj;
     console.log(body);
@@ -125,7 +134,7 @@ export class GamePage implements OnInit {
         console.log('success: ' + JSON.stringify(res));
         this.getObj = res;
         console.log(this.getObj);
-        this.remaining_min = this.set_min - (res['min'] - this.first_min);
+        this.remaining_min = this.set_min - (res['min'] - this.first_min) - 1;
         if(this.remaining_min < 0){
           this.remaining_min = 60 + this.remaining_min;
         }
@@ -136,6 +145,56 @@ export class GamePage implements OnInit {
       },
       error => {
         console.log('error: ' + JSON.stringify(error));
+      }
+    );
+  }
+
+  onBLE = () => {
+    this.getTime();
+    this.ble.scan([], 1).subscribe(
+      device => {
+        // 1号機
+        if(device['id'] == "180A0B3E-FC28-C7F3-EFC5-60A4E95125A8"){
+          this.bleContents1 = "信号の強度: ";
+          this.bleContents2 =  device['rssi'];
+          // this.bleContents = device.rssi;
+          if(Number(device['rssi']) > -40){
+            this.bleContents3 = "1番の宝発見！";
+
+            this.bingoScore = this.bingoScore + 100;
+          }
+          else{
+            this.bleContents3 = "";
+          }
+        }
+        // 2号機
+        if(device['id'] == "C5CD47FD-3C74-35BB-551B-C8995C88BC0A"){
+          this.bleContents1 = "信号の強度: ";
+          this.bleContents2 =  device['rssi'];
+          // this.bleContents = device.rssi;
+          if(Number(device['rssi']) > -40){
+            this.bleContents3 = "2番の宝発見！スコアが増えました";
+
+            this.bingoScore = this.bingoScore + 100;
+          }
+          else{
+            this.bleContents3 = "";
+          }
+        }
+        // 3号機
+        if(device['id'] == "C5CD47FD-3C74-35BB-551B-C8995C88BC0A"){
+          this.bleContents1 = "信号の強度: ";
+          this.bleContents2 =  device['rssi'];
+          // this.bleContents = device.rssi;
+          if(Number(device['rssi']) > -40){
+            this.bleContents3 = "3番の宝発見！スコアが増えました";
+
+            this.bingoScore = this.bingoScore + 100;
+          }
+          else{
+            this.bleContents3 = "";
+          }
+        }
       }
     );
   }

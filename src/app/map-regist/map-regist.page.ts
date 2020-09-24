@@ -36,10 +36,10 @@ export class MapRegistPage implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(
-      params => this.posObj['id'] = params['id']
+      // params => this.posObj['id'] = params['id']
     );
     console.log(this.posObj['id']);
-    // this.posObj['id'] = 'myhome';
+    this.posObj['id'] = 'myhome';
 
     const body = this.posObj;
     console.log(body);
@@ -130,7 +130,7 @@ export class MapRegistPage implements OnInit {
     this.bea[0] = false;
     this.bea[1] = false;
     this.bea[2] = false;
-    this.bea[e.target.id.split(":")[1]-1] = true;
+    this.bea[e.target.id.split("beacon")[1]-1] = true;
   }
 
   // 描画内容の更新

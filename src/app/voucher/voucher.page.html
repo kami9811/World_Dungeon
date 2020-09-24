@@ -1,23 +1,32 @@
 <ion-header >
-
+  <ion-toolbar class="head">
+    <ion-img class="logo" src="../../assets/logo_tr.png"></ion-img>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>クーポン</ion-title>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div id="voucher-title">
     獲得クーポン
   </div>
-  <div id="voucher-table">
+
+  <!-- ここにキャラの画像を載せる. 画像はassetの中に -->
+  <div id="logo_size">
+  <ion-img src="../../assets/image.png"></ion-img>
+  </div>
+  <div id="voucher-table" style="position:relative;top:-450px;">
     <div id="" *ngFor="let v of voucher_contents">
       {{v}}
     </div>
   </div>
 
-  <!-- ここにキャラの画像を載せる. 画像はassetの中に -->
-  <!-- <ion-img src="../../assets/dungeon-man.jpg"></ion-img> -->
-
   <form id="to-home">
-    <button type="submit" id="to-home-button" routerLink="/" routerLincActive="current">
+    <button type="submit" id="to-home-button" routerLink="/" routerLincActive="current" >
       ホームに戻る
     </button>
   </form>
+
 </ion-content>

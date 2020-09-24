@@ -33,6 +33,7 @@ export class ScorePage implements OnInit {
     )
     console.log(this.id);
     console.log(this.score);
+    this.rank = "S";
   }
 
   navigateToVoucher = () => {

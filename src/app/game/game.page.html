@@ -1,10 +1,22 @@
 <ion-header>
-
+  <ion-toolbar class="head">
+    <ion-img class="logo" src="../../assets/logo_tr.png"></ion-img>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>冒険ページ</ion-title>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div id="load_time" (click)="getTime()">更新</div>
-  <div id="remaining_time">残り時間: {{remaining_hour}}時間 {{remaining_min}}分 {{remaining_sec}}秒</div>
+  <div class="remaining_time">
+  <div id="remaining_time1" (click)="getTime()">
+    更新>残り時間
+  </div>
+  <div id = "remaining_time2">
+    {{remaining_hour}}時間 {{remaining_min}}分 {{remaining_sec}}秒
+  </div>
+  </div>
   <table border="1" class="map">
     <tr *ngFor="let r of mapNum">
       <td *ngFor="let d of mapNum">
@@ -12,22 +24,25 @@
       </td>
     </tr>
   </table>
-
+  <div class="treasure_hint">
   <div id="treasure">トレジャーボタン</div>
   <!-- 補間使って切り替えられるようにする -->
   <div id="hint">ヒント</div>
-  <div id="treasure-description">トレジャーボタンを{{treasure_times}}回押すと宝の信号を受信！</div>
+  </div>
+  <div id="treasure-description" (click)="onBLE()">トレジャーボタンを連打すると宝の信号を受信！</div>
+  <div></div>
 
-  <div id="bottom-title">{{bottom_title}}</div>
+  <div id="bottom-title"></div>
   <div id="bottom-frame">
-    <div id="bingo" *ngIf="bottom_bingo">ここにビンゴ</div>
+    <div id="bingo" *ngIf="bottom_bingo"></div>
     <div id="photo" *ngIf="bottom_photo">ここに写真</div>
   </div>
-  <div id="bingo-description" *ngIf="bingo_description">
+  <!-- <div id="bingo-description" *ngIf="bingo_description">
     <div id="bingo-open" *ngFor="let b of bingo_num">No.{{bingo[b]}}</div>
-  </div>
+  </div> -->
 
   <div id="finish" (click)="navigateToScore()">冒険を終了する</div>
-
-
+  <div>
+    {{bleContents1}} {{bleContents2}} {{bleContents3}}
+  </div>
 </ion-content>

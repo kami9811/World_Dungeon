@@ -1,29 +1,55 @@
 <ion-header>
-
+  <ion-toolbar class="head">
+    <ion-img class="logo" src="../../assets/logo_tr.png"></ion-img>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>スコア</ion-title>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div id="result">
-    結果発表
-  </div>
+  <ion-header>
 
-  <div id="score">
-    あなたのスコアは{{score}}です!
-  </div>
-  <!-- ここにキャラの画像を載せる. 画像はassetの中に -->
-  <!-- <ion-img src="../../assets/dungeon-man.jpg"></ion-img> -->
+  </ion-header>
 
-  <!-- 全員ランキング登録、1000点S、500点A、100点B、それ以下C -->
-  <div id="rank">
-    評価は{{rank}}です！
-  </div>
-
-  <form id="regist-form" (submit)="regist()">
-    <label for="name">名前: </label>
-    <input type="text" id="name" [(ngModel)]="name" name="name" />
-    <button type="submit" id="regist">登録</button>
-  </form>
-  <form *ngIf="getVoucher" id="to-voucher" (submit)="navigateToVoucher()">
-    <button type="submit" id="to-voucher-button">クーポン獲得!</button>
-  </form>
+  <ion-content>
+    <div id="result">
+      結果発表
+    </div>
+    <div class="score_result">
+    <div id="score">
+      <div id = "score1">
+        あなたのスコアは
+      </div>
+      <div id = "score2">
+       {{score}}
+      </div>
+      <div id = "score3">
+       です!
+      </div>
+    </div>
+    <!-- ここにキャラの画像を載せる. 画像はassetの中に -->
+    <ion-img src="/assets/image.png" class="image"></ion-img>
+    </div>
+    <!-- 全員ランキング登録、1000点S、500点A、100点B、それ以下C -->
+    <div id="rank">
+      <div id = "rank1">
+        評価は
+      </div>
+      <div id = "rank2">
+      {{rank}}
+      </div>
+      <div id = "rank3">
+       です！
+      </div>
+    </div>
+    <div class="regist_all">
+    <form id="regist-form" (submit)="regist()">
+      <label for="name">名前: </label>
+      <input type="text" id="name" [(ngModel)]="name" name="name" />
+      <button type="submit" id="regist">登録・クーポン獲得</button>
+    </form>
+    </div>
+  </ion-content>
 </ion-content>

@@ -1,18 +1,30 @@
 <ion-header >
-
+  <ion-toolbar class="head">
+    <ion-img class="logo" src="../../assets/logo_tr.png"></ion-img>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>冒険の準備はいいか！</ion-title>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-img class="logo_start" src="../../assets/logo_tr.png"></ion-img>
+  <div class="button_center">
   <form class="ion-padding" (submit)="navigate()">
     <button type="submit" id="game">ゲームスタート</button>
   </form>
+  </div>
+  <div class="rank">
+  <div class="rank-title">
   <div id="rank-table">ランキング表</div>
+  </div>
   <div id="ranking">
     <div id="first">[1位] 名前: {{firstName}} スコア: {{firstScore}}</div><br>
     <div id="second">[2位]名前: {{secondName}} スコア: {{secondScore}}</div><br>
     <div id="third">[3位]名前: {{thirdName}} スコア: {{thirdScore}}</div><br>
     <div id="forth">[4位]名前: {{forthName}} スコア: {{forthScore}}</div><br>
     <div id="fifth">[5位]名前: {{fifthName}} スコア: {{fifthScore}}</div><br>
+  </div>
   </div>
 </ion-content>

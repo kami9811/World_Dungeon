@@ -1,3 +1,58 @@
-#voucher{
-  background: #cae4db
+.button_wrapper {
+  text-align: center;
+}
+button.button1 {
+  font-size:  1.2em;
+  font-size: bold;
+
+  padding: 10px 30px;
+
+  background-color: #cae4db;
+
+  border: solid;
+  border-color: #7a9d96;
+
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  border-radius: 8px;
+}
+
+
+button.button2 {
+  font-size:  1.2em;
+  font-size: bold;
+
+  padding: 10px 30px;
+
+  background-color: #cae4db;
+
+  border: solid;
+  border-color: #7a9d96;
+
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  border-radius: 8px;
+
+}
+
+button.button3 {
+  font-size:  1.2em;
+  font-size: bold;
+
+  padding: 10px 30px;
+
+  background-color: #EBEBEB;
+  color: #000;
+
+  border: solid;
+  border-color: #7a9d96;
+
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  border-radius: 8px;
+}
+
+button.button1:hover{
+  background-color: #24d;
+  color: #fff;
 }

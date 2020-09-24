@@ -1,0 +1,59 @@
+#result{
+  text-align : center;
+  font-size : 30px;
+}
+.score_result{
+  text-align : center;
+}
+.regist_all{
+  text-align : center;
+}
+#regist{
+  margin : 3px;
+}
+#score {
+  position : absolute;
+  color : #000000;
+  font-size : 30px;
+  top : 100px;
+  left : 20%;
+  z-index : 2;
+}
+#score2{
+  font-size : 45px;
+  font-family : 'arial black';
+}
+#rank{
+  position : absolute;
+  top : 325px;
+  left : 15%;
+  z-index : 3;
+  font-size : 25px;
+}
+#rank2{
+  position : absolute;
+  font-size : 40px;
+  font-family : 'arial black';
+  left : 80px;
+}
+#rank3{
+  position : relative;
+  top : 60px;
+  left : 100px;
+}
+.ion-img.image {
+  position : absolute;
+  width : 100%;
+  z-index : 1;
+}
+#regist{
+  display       : inline-block;
+  border-radius : 5%;          /* 角丸       */
+  font-size     : 12pt;        /* 文字サイズ */
+  text-align    : center;      /* 文字位置   */
+  padding       : 10px 50px;   /* 余白       */
+  background    : #cae4db;     /* 背景色     */
+  color         : #000000;     /* 文字色     */
+  line-height   : 0.7em;         /* 1行の高さ  */
+  border        : 2px solid #7a9d96;    /* 枠の指定 */
+}
