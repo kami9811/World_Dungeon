@@ -1,7 +1,8 @@
 {
   "name": "World Dungeon",
   "integrations": {
-    "capacitor": {}
+    "capacitor": {},
+    "cordova": {}
   },
   "type": "angular"
 }
