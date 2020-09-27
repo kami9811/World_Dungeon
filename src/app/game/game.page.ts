@@ -30,14 +30,23 @@ export class GamePage implements OnInit {
   bottom_photo: Boolean = false;
   bingo_description: Boolean = true;
   // ビンゴの選出された数
-  // bingo: Number[];
   bingo: Number[] = [1, 3, 9];  // 仮置き
-  bingo1: Number[] = [1, 2, 3];
-  bingo2: Number[] = [4, 5, 6];
-  bingo3: Number[] = [7, 8, 9];
-  // bingo_num: Number [];
   bingo_num: Number[] = [...new Array(3).keys()];  // 開けられる数, 仮置き
+  // ビンゴの開け閉めの管理
+  bingo_status: Boolean[] = [
+                              false, false, false,
+                              false, false, false,
+                              false, false, false
+                            ]
   bingoScore: any = 0;  // ビンゴの結果
+  // ビンゴの画像操作用変数
+  bingoId1: any = 0;
+  bingoId2: any = 0;
+  bingoId: Number = 0;
+  // ビンゴパネルをあけれるときに光らせるように、Class用の変数を作る
+  bingoCla: string[] = new Array(9);
+  // ビンゴのパネルを開ける枚数
+  bingoOpenable: any = 0;
 
   // 描画情報
   mapNum: Number[] = [...new Array(16).keys()];  // マップサイズ
@@ -54,6 +63,7 @@ export class GamePage implements OnInit {
   image2Flag: Boolean = false;
   image3: string = "";
   image3Flag: Boolean = false;
+  imageScoreFlag: Boolean[] = [false, false, false];
 
   // ビーコンフラグ
   beaconFlag1: Boolean = false;
@@ -72,6 +82,10 @@ export class GamePage implements OnInit {
   ) { }
 
   ngOnInit() {
+    for(let i = 0; i < 9; i++){
+      this.bingoCla[i] = 'bingo_img';
+    }
+
     this.route.params.subscribe(
       params => this.id = params['id']
     );
@@ -148,6 +162,33 @@ export class GamePage implements OnInit {
   }
 
   navigateToScore = () => {
+    // スコアリングしてから遷移
+    this.bingoScore = 100;
+    if(this.bingo_status[0] == true && this.bingo_status[1] == true && this.bingo_status[2] == true){
+      this.bingoScore = this.bingoScore * 1.5;
+    }
+    if(this.bingo_status[3] == true && this.bingo_status[4] == true && this.bingo_status[5] == true){
+      this.bingoScore = this.bingoScore * 1.5;
+    }
+    if(this.bingo_status[6] == true && this.bingo_status[7] == true && this.bingo_status[8] == true){
+      this.bingoScore = this.bingoScore * 1.5;
+    }
+    if(this.bingo_status[0] == true && this.bingo_status[3] == true && this.bingo_status[6] == true){
+      this.bingoScore = this.bingoScore * 1.5;
+    }
+    if(this.bingo_status[1] == true && this.bingo_status[4] == true && this.bingo_status[7] == true){
+      this.bingoScore = this.bingoScore * 1.5;
+    }
+    if(this.bingo_status[2] == true && this.bingo_status[5] == true && this.bingo_status[8] == true){
+      this.bingoScore = this.bingoScore * 1.5;
+    }
+    if(this.bingo_status[0] == true && this.bingo_status[4] == true && this.bingo_status[8] == true){
+      this.bingoScore = this.bingoScore * 1.5;
+    }
+    if(this.bingo_status[2] == true && this.bingo_status[4] == true && this.bingo_status[6] == true){
+      this.bingoScore = this.bingoScore * 1.5;
+    }
+
     this.router.navigate(['/score', this.id, this.bingoScore]);
   }
 
@@ -183,10 +224,28 @@ export class GamePage implements OnInit {
     this.ble.scan([], 1).subscribe(
       device => {
         // 1号機
-        if(device['id'] == "180A0B3E-FC28-C7F3-EFC5-60A4E95125A8" && this.beaconAlready[0]){
+        if(device['id'] == "180A0B3E-FC28-C7F3-EFC5-60A4E95125A8" && this.beaconAlready[0] && this.bingoOpenable == 0){
           if(Number(device['rssi']) > -40){
-            this.treasure_description = "お宝ゲット！光った枠から" + 3 + "個あけられるよ！";
+            if((this.set_min - this.remaining_min) <= 5){
+              this.bingoOpenable = 3;
+              if(this.imageScoreFlag[0] == true){
+                this.bingoOpenable = this.bingoOpenable - 1;
+              }
+            }
+            else if((this.set_min - this.remaining_min) <= 10){
+              this.bingoOpenable = 2;
+              if(this.imageScoreFlag[0] == true){
+                this.bingoOpenable = this.bingoOpenable - 1;
+              }
+            }
+            else{
+              this.bingoOpenable = 1;
+            }
+            this.treasure_description = "お宝ゲット！ビンゴの中央から" + this.bingoOpenable+ "個あけられるよ！";
             this.beaconAlready[0] = false;
+            for(let i = 0; i < 3; i++){
+              this.bingoCla[3 * i + 1] = 'bingo_img_openable';
+            }
           }
           else if(Number(device['rssi']) > -50){
             this.treasure_description = "宝の至近距離でトレジャーボタンをタップ！";
@@ -196,10 +255,28 @@ export class GamePage implements OnInit {
           }
         }
         // 2号機
-        else if(device['id'] == "C5CD47FD-3C74-35BB-551B-C8995C88BC0A" && this.beaconAlready[1]){
+        else if(device['id'] == "C5CD47FD-3C74-35BB-551B-C8995C88BC0A" && this.beaconAlready[1] && this.bingoOpenable == 0){
           if(Number(device['rssi']) > -40){
-            this.treasure_description = "お宝ゲット！光った枠から" + 3 + "個あけられるよ！";
+            if((this.set_min - this.remaining_min) <= 5){
+              this.bingoOpenable = 3;
+              if(this.imageScoreFlag[1] == true){
+                this.bingoOpenable = this.bingoOpenable - 1;
+              }
+            }
+            else if((this.set_min - this.remaining_min) <= 10){
+              this.bingoOpenable = 2;
+              if(this.imageScoreFlag[1] == true){
+                this.bingoOpenable = this.bingoOpenable - 1;
+              }
+            }
+            else{
+              this.bingoOpenable = 1;
+            }
+            this.treasure_description = "お宝ゲット！ビンゴの左列から" + 3 + "個あけられるよ！";
             this.beaconAlready[1] = false;
+            for(let i = 0; i < 3; i++){
+              this.bingoCla[3 * i] = 'bingo_img_openable';
+            }
           }
           else if(Number(device['rssi']) > -50){
             this.treasure_description = "宝の至近距離でトレジャーボタンをタップ！";
@@ -209,10 +286,28 @@ export class GamePage implements OnInit {
           }
         }
         // 3号機
-        else if(device['id'] == "C5CD47FD-3C74-35BB-551B-C8995C88BC0A" && this.beaconAlready[2]){
+        else if(device['id'] == "3866D0DC-04FC-3DD1-FB3B-F600E88ABC57" && this.beaconAlready[2] && this.bingoOpenable == 0){
           if(Number(device['rssi']) > -40){
-            this.treasure_description = "お宝ゲット！光った枠から" + 3 + "個あけられるよ！";
+            if((this.set_min - this.remaining_min) <= 5){
+              this.bingoOpenable = 3;
+              if(this.imageScoreFlag[2] == true){
+                this.bingoOpenable = this.bingoOpenable - 1;
+              }
+            }
+            else if((this.set_min - this.remaining_min) <= 10){
+              this.bingoOpenable = 2;
+              if(this.imageScoreFlag[2] == true){
+                this.bingoOpenable = this.bingoOpenable - 1;
+              }
+            }
+            else{
+              this.bingoOpenable = 1;
+            }
+            this.treasure_description = "お宝ゲット！ビンゴの右列から" + 3 + "個あけられるよ！";
             this.beaconAlready[2] = false;
+            for(let i = 0; i < 3; i++){
+              this.bingoCla[3 * i + 2] = 'bingo_img_openable';
+            }
           }
           else if(Number(device['rssi']) > -50){
             this.treasure_description = "宝の至近距離でトレジャーボタンをタップ！";
@@ -227,6 +322,7 @@ export class GamePage implements OnInit {
 
   // ビーコンエリアをタップした時の処理
   onBeacon = (e: any) => {
+    this.getTime();
     this.beaconId1 = Number(e.target.id.split(":")[1]);
     this.beaconId2 = Number(e.target.id.split(":")[2]);
     this.beaconId = 16 * this.beaconId1 + this.beaconId2;
@@ -264,6 +360,7 @@ export class GamePage implements OnInit {
 
   // ヒント写真の開示
   onHint = () => {
+    this.getTime();
     if(this.image1Flag == false && this.image2Flag == false && this.image3Flag == false){
       if(this.beaconFlag1 == true){
         this.image1Flag = true;
@@ -271,6 +368,7 @@ export class GamePage implements OnInit {
         this.bottom_photo = true;
         this.bottom_title = "ヒント";
         this.hint_button = "ヒントを非表示に";
+        this.imageScoreFlag[0] = true;
       }
       else if(this.beaconFlag2 == true){
         this.image2Flag = true;
@@ -278,6 +376,7 @@ export class GamePage implements OnInit {
         this.bottom_photo = true;
         this.bottom_title = "ヒント";
         this.hint_button = "ヒントを非表示に";
+        this.imageScoreFlag[1] = true;
       }
       else if(this.beaconFlag3 == true){
         this.image3Flag = true;
@@ -285,6 +384,7 @@ export class GamePage implements OnInit {
         this.bottom_photo = true;
         this.bottom_title = "ヒント";
         this.hint_button = "ヒントを非表示に";
+        this.imageScoreFlag[2] = true;
       }
     }
     else{
@@ -299,5 +399,28 @@ export class GamePage implements OnInit {
     console.log(this.image1Flag);
     console.log(this.image2Flag);
     console.log(this.image3Flag);
+  }
+
+  // ビンゴをひっくり返すときの処理
+  onBingo = (e: any) => {
+    this.getTime();
+    this.bingoId1 = Number(e.target.id.split(':')[1]);
+    this.bingoId2 = Number(e.target.id.split(':')[2]);
+    // 判定項目: bingoClaの該当エリアがOpenableか、Openableが1以上か
+    // Openableが0になるか、ひっくり返したときにbingoClaを戻す
+    if(this.bingoCla[3 * this.bingoId1 + this.bingoId2] == 'bingo_img_openable'){
+      this.bingo_status[3 * this.bingoId1 + this.bingoId2] = !this.bingo_status[3 * this.bingoId1 + this.bingoId2];
+      this.bingoCla[3 * this.bingoId1 + this.bingoId2] == 'bingo_img';
+      this.bingoOpenable = this.bingoOpenable - 1;
+    }
+    if(this.bingoOpenable == 0){
+      for(let i = 0; i < 9; i++){
+        this.bingoCla[i] = 'bingo_img';
+      }
+      // トレジャーボタンの記述も初期化する.
+      this.treasure_description = "トレジャーボタンタップで宝の信号を受信！";
+    }
+    // console.log(e.target.id);
+    // console.log(this.bingo_status);
   }
 }

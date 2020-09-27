@@ -37,6 +37,8 @@ export class MapRegistPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    // 初めての人用にマップ初期化するやつやってない
+
     this.route.params.subscribe(
       params => {
         this.user_id = params['id'];

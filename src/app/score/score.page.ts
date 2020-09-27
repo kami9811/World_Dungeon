@@ -15,6 +15,9 @@ export class ScorePage implements OnInit {
 
   id: string = '';
 
+  // moveButton: string = "登録・クーポン獲得";
+  moveButton: string = "スコア登録";
+
   posObj: any = {};
   getObj: any = {};
 
@@ -33,11 +36,20 @@ export class ScorePage implements OnInit {
     )
     console.log(this.id);
     console.log(this.score);
-    this.rank = "S";
+    if(this.score > 1500){
+      this.rank = "S";
+    }
+    else if(this.score > 1000){
+      this.rank = "A";
+    }
+    else{
+      this.rank = "B";
+    }
   }
 
   navigateToVoucher = () => {
-    this.router.navigate(['/voucher']);
+    // this.router.navigate(['/voucher']);
+    this.router.navigate(['/']);
   }
 
   regist = () => {

@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar class="head">
-    <ion-img class="logo" src="../../assets/logo_tr.png"></ion-img>
+    <ion-img class="logo" src="../../assets/logo_tr.png" routerLink="/"></ion-img>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -48,7 +48,7 @@
     <form id="regist-form" (submit)="regist()">
       <label for="name">名前: </label>
       <input type="text" id="name" [(ngModel)]="name" name="name" />
-      <button type="submit" id="regist">登録・クーポン獲得</button>
+      <button type="submit" id="regist">{{moveButton}}</button>
     </form>
     </div>
   </ion-content>

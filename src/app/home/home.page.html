@@ -13,13 +13,16 @@
   <div class="button_wrapper">
   <ion-img src="../../assets/top_forrest.png"></ion-img>
   <form class="ion-padding" (submit)="navigateToDungeon()">
-    <label for="camp-id" id="id-label">キャンプ場名を入力: </label>
-    <input type="text" id="camp-id" [(ngModel)]="id" name="id">
+    <ion-item lines="full" class="ion-padding-bottom">
+      <ion-label position="floating">キャンプ場名</ion-label>
+      <ion-input required type="text" id="camp-id" [(ngModel)]="id" name="id"></ion-input>
+    </ion-item>
     <button id="dungeon" class="button1" type="submit">キャンプ場検索</button>
   </form>
-  <form class="ion-padding" (submit)="navigateToVoucher()">
+  <!-- 獲得クーポンは一旦管理者側からのみ見れるように -->
+  <!-- <form class="ion-padding" (submit)="navigateToVoucher()">
     <button id="voucher" class="button2" type="submit">獲得クーポン</button>
-  </form>
+  </form> -->
   <form class="ion-padding" (submit)="navigateToLogin()">
     <button id="owner" class="button3" type="submit">管理者用ログイン</button>
   </form>

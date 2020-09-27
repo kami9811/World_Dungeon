@@ -1,8 +1,9 @@
 <ion-header >
   <ion-toolbar class="head">
-    <ion-img class="logo" src="../../assets/logo_tr.png"></ion-img>
+    <ion-img class="logo_photo" src="../../assets/logo_tr.png" routerLink="/"></ion-img>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
+      <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-title>写真撮影</ion-title>
   </ion-toolbar>
@@ -10,9 +11,9 @@
 
 <ion-content>
   <div>
-    {{photo_num}}<br>
+    ビーコン{{photo_num}}番のヒント写真の撮影です。<br>
     {{photo_description}}<br>
-    最後の撮影写真が登録されます．
+    最後の撮影した写真がヒントに登録されます。
   </div>
   <img [src]="currentImage" *ngIf="currentImage">
 

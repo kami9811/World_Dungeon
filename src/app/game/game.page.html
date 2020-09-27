@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar class="head">
-    <ion-img class="logo" src="../../assets/logo_tr.png"></ion-img>
+    <ion-img class="logo" src="../../assets/logo_tr.png" routerLink="/"></ion-img>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -34,7 +34,18 @@
 
   <div id="bottom-title">{{bottom_title}}</div>
   <div id="bottom-frame">
-    <div id="bingo" *ngIf="bottom_bingo"></div>
+    <div id="bingo" *ngIf="bottom_bingo">
+      <tr *ngFor="let r of bingo_num">
+        <td *ngFor="let d of bingo_num">
+          <div *ngIf="!bingo_status[r*3+d]" class="bingo_cell" (click)="onBingo($event)">
+            <ion-img [class]="bingoCla[r*3+d]" [id]="'b_id:'+r+':'+d" [src]="'../../assets/before'+(r+1)+'-'+(d+1)+'.png'"></ion-img>
+          </div>
+          <div *ngIf="bingo_status[r*3+d]" class="bingo_cell" (click)="onBingo($event)">
+            <ion-img [class]="bingoCla[r*3+d]" [id]="'b_id:'+r+':'+d" [src]="'../../assets/after'+(r+1)+'-'+(d+1)+'.png'"></ion-img>
+          </div>
+        </td>
+      </tr>
+    </div>
     <div id="photo" *ngIf="bottom_photo">
       <img class="hint-image" id="hint1" [src]="image1" *ngIf="image1Flag">
       <img class="hint-image" id="hint2" [src]="image2" *ngIf="image2Flag">
